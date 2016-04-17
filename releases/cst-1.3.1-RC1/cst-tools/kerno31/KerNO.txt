@@ -1,0 +1,89 @@
+                     ______ __           _____   ________
+                     ___  //_/______________  | / /_  __ \
+                     __  ,<  _  _ \_  ___/_   |/ /_  / / /
+                     _  /| | /  __/  /   _  /|  / / /_/ /
+                     /_/ |_| \___//_/    /_/ |_/  \____/
+
+
+       Title: KerNO
+     Version: 3.1
+ Platform(s): TI-89, TI-89 Titanium, TI-92+, V200
+      Author: Greg Dietsche
+    Web Site: http://calc.gregd.org/
+      E-Mail: calc .at. gregd.org
+Release Date: 08/12/2004
+	Size: 1617 bytes
+
+_______________________________________________________________________________________________
+					DESCRIPTION
+THE NAME:
+	KerNO is an intentional misspelling of the work kernel. It also has _several_
+	implied meanings...
+
+WHAT'S IN A NAME?:
+	KerNO provides some features found in current kernels, but it will only allow
+		nostub programs to be executed. I wrote KerNO because I do not have any
+		kernel based programs on my calc, but wanted a small program that would
+		provide the features of a kernel that are relevant to NOSTUB programs.
+
+	In the process of writing KerNO, several NEW features which are not found
+		in current kernels were added. These new features include SPEEDING up the
+		keyboard, determining if the system heap is corrupt, and providing a fix
+		for games which slow down when the calculator is turned off and later turned
+		back on during game play.
+
+_______________________________________________________________________________________________
+					FEATURES
+
+1. Catches the following errors, which normally cause the calc to crash:
+	a. Address Error
+	b. Illegal Instruction
+	c. Divide By Zero
+	d. CHK Instruction
+	e. TRAPV Instruction
+	f. Privilege Violation* (see notes)
+	g. Line 1111 Emulator	(handles all possible AMS 2.04 - AMS 2.09  Line 1111 Instructions)
+
+2. ESC-ON can be used to break out of a program that is not responding.
+
+3. DIAMOND-ON can be pressed to turn the calc off even when the AMS is busy.
+
+4. Speeds up keyboard repeat rates, and decreases the delay before keys are repeated.
+	This feature is very similar to FastKeyboard (see credits).
+
+5. Fixes the Home Screen when recovering from a crash.
+
+6. Fixes (removes) the slowdown that happens in some games when the calc is turned
+   back on after being turned off during game play.
+
+7. Checks the heap and informs the user if it has been corrupted. If heap corruption
+	is detected, it is unlikely that KerNO will successfully recover the error.
+	Resetting the calculator is highly recommended!
+
+8. The Assembly Language size limit has been effectively raised to
+   65518 bytes(~64K)(65520 bytes if you want to be technical) for all
+   AMS versions. NOTE: the size limits set by TI are only present
+   on AMS 2.xx.
+
+9. Assembly language programs that return values can be used in expressions
+   such as 10/myasmfunc().
+
+10. Provides a custom Line 1111 emulator so that programs written to use
+   the line 1111 emulator won't crash if they are run on AMS versions
+   prior to 2.04. All line 1111 instructions found in AMS 2.05 are supported.
+
+_______________________________________________________________________________________________
+				HOW TO USE
+**Simply send KerNO to your calculator and run it once to install. To
+	uninstall, run KerNO a second time. KerNO is designed so that any version of
+	KerNO can uninstall another version (even newer ones).
+
+	*Users with a HW2 and HW3 calculators must install HW3 Patch before using KerNO
+
+**For Hardware Version Two / Three calculators, HW3 Patch *MUST* be installed first.
+
+**KerNO requires AMS 2.xx to work! If the calc has AMS 1.xx installed, upgrade or
+	use KerNO version 1.2 instead.
+
+ To use the ESC-ON or DIAMOND-ON key combinations, one must first press and *hold*
+ the modifier key (ESC or DIAMOND); then press and the ON key.

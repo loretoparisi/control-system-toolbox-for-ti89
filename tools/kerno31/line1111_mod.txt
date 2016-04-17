@@ -1,0 +1,26 @@
+TI-89 AMS 2.05-2.09 Line 1111 Emulator Technical Information by Greg Dietsche
+
+email: gforce@calc.org
+web: http://calc.gregd.org/
+
+This file is best viewed in Notepad with word wrap turned off.
+
+Examples of each F-Line Instruction can be found in a program
+called FLINE which is included with KerNO version 2.0 and above.
+
+Functions In the order they are handled:
+
+	6 byte bsr w/long word displacement
+		.word 0xFFF0
+		.long displacement
+
+	4 byte ROM CALL
+		.word 0xFFF2
+		.word rom call index * 4
+
+	2 byte ROM CALL
+		.word 0xF800 + Rom Call Index	(range $0 through $7EF inclusive)
+
+	6 byte bra w/long word displacement
+		.word 0xF800 + 0x7F1	(0xFFF1)
+		.long displacement

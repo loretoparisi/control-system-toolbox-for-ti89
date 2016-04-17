@@ -1,0 +1,92 @@
+HW3Patch 1.03 by Kevin Kofler
+=============================
+Copyright (C) 2004-2006 Kevin Kofler. All rights reserved.
+Q: What is the HW3Patch?
+A: It is a program which modifies TI's Advanced Mathematics Software operating
+   system in a way which allows memory-resident programs (TSRs), dynamically-
+   linked libraries (DLLs), nested function trampolines and similar constructs
+   to run.
+
+Q: What hardware and software versions does HW3Patch run on?
+A: Hardware:
+   * Hardware version 2 (TI-89 HW2, TI-92+ HW2, Voyage 200)
+   * Hardware versions 3 and 4 (TI-89 Titanium)
+   Software: Any AMS version between (and including) 2.00 and 3.10.
+
+Q: How do I run the HW3Patch?
+A: Send hw3patch.89z to your calculator, type hw3patch() and press [ENTER].
+
+Q: How does it work?
+A: It disables the RAM execution protection and modifies the AMS to make this
+   permanent.
+
+Q: OK, but how EXACTLY does it work?
+A: In technical terms, it:
+   1. disables the FlashROM and I/O port protection (do NOT ask me how to do
+      that!)
+   2. zeros out the ports at 0x700000-0x700007
+   3. zeros out the initializers for 0x700000-0x700007 in the function 15 of the
+      trap 11
+   4. zeros out a check in the function 15 of the trap 11 which makes it fail
+      when called from the trap 4 and thus causes a crash when changing the
+      batteries with a TSR installed
+
+Q: Will you release the source code of HW3Patch?
+A: No, sorry. I MIGHT send it to trusted people who give me really good reasons
+   why this might be a good idea, but generally the answer will be "no". The
+   reason for this is that the methods for disabling the FlashROM and I/O port
+   protection are a closely-guarded secret, because that protection is the only
+   one stopping you from writing a program which makes the calculator
+   PERMANENTLY UNBOOTABLE.
+
+Q: After running the HW3Patch, can I still send my copy of AMS to another
+   calculator?
+A: NO, UNLESS you are using the TIB Receiver on the receiving calculator. You
+   CAN however RECEIVE an AMS update, and doing so will uninstall the HW3Patch
+   and allow you to send your copy of AMS again (until you run HW3Patch again).
+
+Q: How can I uninstall the HW3Patch?
+A: You need to send a fresh copy of the AMS operating system. This will
+   overwrite the patched AMS with a clean version.
+
+Q: Can I switch from h220xTSR to HW3Patch on my HW2 calculator?
+A: Yes, the HW3Patch can "upgrade" h220xTSR installations. The only caveat is
+   that, in order to be able to uninstall h220xTSR's trap 4 hook, there must not
+   be any keyboard accelerators, password programs or similar trap 4 TSRs (i.e.
+   memory-resident programs which are executed whenever the calculator is turned
+   on or off) installed. Otherwise, you will get an "ERROR: Unknown trap 4
+   hook", which means you need to temporary uninstall the aforementioned types
+   of TSRs.
+
+Q: Can I switch from HW2Patch to HW3Patch on my HW2 calculator?
+A: Yes, the HW3Patch can upgrade both RAM-resident and FlashROM-resident
+   installations of the HW2Patch. The result will always be a FlashROM-resident
+   HW3Patch installation. The advantage of doing this is that you will no longer
+   get crashes when you change your batteries.
+
+Q: Is the HW3Patch dangerous?
+A: There is always a risk involved with disabling the FlashROM and I/O port
+   protection, but I really do NOT think the HW3Patch is going to harm your
+   calculator in any way. However, please keep in mind that this is NOT a
+   legally binding promise, and that I can IN NO EVENT be held legally
+   responsible for any type of damage (see the license terms).
+
+Q: What does "Unknown trap 11 hook" mean?
+A: It means some hook was installed on the calculator's "trap 11", the system
+   trap used to handle all the operations requiring Flash unprotection, and
+   HW3Patch can't figure out what. HW3Patch needs to use this trap, and thus
+   cannot work with that hook installed.
+
+   In order to fix this problem:
+   1. archive all files on the calculator you want to keep (including, but not
+      limited to, hw3patch) as the next step will delete all non-archived files,
+   2. press 2nd+left+right+ON (TI-89, TI-89 Titanium) or 2nd+HAND+ON (TI-92+,
+      Voyage 200) simultaneously to fully reset the calculator's RAM (the resets
+      from the MEM dialog only delete files, so don't use these),
+   3. run hw3patch() again.
+   (Don't run or install anything between steps 2 and 3.)
+
+Q: Where can I contact the author?
+A: Web page: http://www.tigen.org/kevin.kofler/ti89prog/
+   E-mail: kevin.kofler@chello.at or Kevin@tigcc.ticalc.org
+* Added support for HW 4.00 (relaxed version check only).

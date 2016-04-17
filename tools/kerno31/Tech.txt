@@ -1,0 +1,53 @@
+***KerNO Technical Information***
+
+This document contains technical information about KerNO... if you want to read the readme,
+open KerNO.txt instead.
+
+***KERNO IMPORTANT ADDRESSES TABLE:
+ ADDRESS						CONTENTS
+___________________________________________________________________________________
+  $30.w		The version number of KerNO. See the version table for more info
+
+  $32.w		Kernel Identifier: will always be equal to #'KN'
+
+  $34.l		DoorsOS Exec Function: Will display an error message if called.
+
+  $38.l		Uninstall: A pointer to the uninstall function of KerNO.
+				It will do ALL of the uninstall work for you.
+				void UninstallKerno(void) is the prototype. Assume
+				standard TIOS function call rules.
+____________________________________________________________________________________
+
+
+***KERNO VERSION TABLE:
+KerNO Version		Contents of $30.w
+___________________________________________
+1.0				$00
+1.1				$01
+1.2				$02
+2.0				$10
+2.1				$11
+2.2				$12
+2.3				$13
+2.4				$14
+3.0				$20
+3.1				$21
+___________________________________________
+
+
+For AMS 2.07 and above Clock ("clack") compatibility, it is best to redirect
+Auto Interrupts 1 and 5 for rowreading, while not disabling Auto Interrupt 3. This means that you
+should never use OSSetSR with a value greater than or equal to 0x300
+
+To make programs that are compatible with KerNO's DIAMOND+ON and ESC+ON features,
+do not completely disable interrupts. Instead of writing OSSetSR(0x700); or its
+equivalent, short x=OSSetSR(0x200), and redirect auto-interrupt 5 to a dummy handler. When you are
+done _rowreading, use OSSetSR(x) to restore the interrupt mask, and restore auto-interrup 5
+to its default handler. As always, depending on your needs, there are many variations on this...
+but, be carefull never to disable Auto Interrupt 3, or your program will cause the Clock to loose
+track of time on HW2 calcs!
+
+To disable KerNO's DIAMOND+ON and ESC+ON key hooks, it is necessary to disable
+auto-int 6 in some way or another... the most common ways would be redirecting the
+interrupt to a dummy handler, writting your own handler, or disabling the auto-int 6
+interrupt with OSSetSR.

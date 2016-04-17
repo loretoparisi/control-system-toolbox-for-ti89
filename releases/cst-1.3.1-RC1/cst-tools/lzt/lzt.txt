@@ -1,0 +1,40 @@
+Laplace and Z transform R7		(open this file in DOS MODE)
+
+Works on TI89 and TI92P, AMS 1.0x without installed kernel.
+On AMS 2.0x needs any kernel like DoorsOS, UniOS or KerNO.
+Doesn't work on TI92P, AMS 1.00.
+
+Installation:
+
+	Send file named lztr7.89g to your calc
+	on calc: Run lzt\install() and choose "Archive"
+
+	Check by pressing MODE if these options are set before using:
+		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		!!!	ANGLE to RADIAN          	!!!
+		!!!	COMPLEX FORMAT to RECTANGULAR 	!!!
+		!!!	EXACT/APPROX to AUTO          	!!!
+		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+Included function:
+
+	ltrn( f(t) , t , s )		Laplace transformation
+	invl( F(s) , s , t )		inverse Laplace transformation
+	finvl( F(s) , s , t ) 		fast 	- || -
+	ztrn( f(k) , k , z )		Z transformation
+	invz( F(z) , z , k )		inverse Z tr.
+	finvz( F(z) , z , k )		fast inv. Z tr.
+	heav2dir( f(k) , k )		heaviside -> discrete dirac
+
+
+FAQ:
+
+Q:	It produces an error "Invalid program reference"
+A:	It means that you are using Advanced Mathematics Software (AMS) 2.0x
+	without any installed kernel.
+	Install any kernel (DoorsOS, UniOS, KerNO)
+		
+		Unzip file DISTRIBUTED_FILES\kerno.zip.
+		Send and run file kerno.89z for HW1 calc or
+		hw2kerno.89z for HW2 calc.

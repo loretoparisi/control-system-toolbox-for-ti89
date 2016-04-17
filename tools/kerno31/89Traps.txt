@@ -1,0 +1,285 @@
+89Traps.txt By Greg Dietsche
+Initial Date: 07/23/2001
+Version Beta
+
+WARNING: This document is UNDER CONSTRUCTION some/all/any of the information presented here could be wrong.
+
+----------------------------------------------------------------------------
+ABOUT
+----------------------------------------------------------------------------
+The 68000 processor used by the TI-89 keeps a #1024 byte vector table beginning at $000000. This table contains pointers to routines used by the cpu, operating system, and the user. The vectors are refered to with an index from #0 to #255 inclusive. This document describes some of these vectors as they relate to the ams.
+
+			   Exception Vector Assignment Table
+----------------------------------------------------------------------------------
+Address			Vector Function				Vector Index
+----------------------------------------------------------------------------------
+$000 	Reset Vector - Contains initial SSP & PC		0-1	($0-$1)
+$008 	Bus Error 						2	($2)
+$00C	Address Error 						3	($3)
+$010	Illegal Instruction					4	($4)
+$014	Zero Divide						5	($5)
+$018	CHK Instruction						6	($6)
+$01C	TRAPV Instruction					7	($7)
+$020	Privilege Violation					8	($8)
+$024	Trace							9	($9)
+$028	Line 1010 ($A) Emulator					10 	($A)
+$02C	Line 1111 ($F) Emulator					11 	($B)
+$030	Unassigned: Reserved by Motorola			12-14	($C-$E)
+$03C	Uninitialized Interrupt Vector				15 	($F)
+$040	Unassigned: Reserved by Motorola			16-23	($10-$17)
+$060	Spurious Interrupt					24	($18)
+$064	Level 1-7 Interrupt Autovector				25-31	($19-$1F)
+$080	Instruction Vectors TRAP #0-#15				32-47	($20-$2F)
+$0C0	Unassigned: Reserved by Motorola			48-63 	($30-$3F)
+$100	User Interrupt Vectors					64-255	($40-$FF)
+$400	End of Exception Vector Table				***************
+----------------------------------------------------------------------------------
+
+--------------------------------
+VECTOR ASSIGNMENTS ON THE TI-89
+--------------------------------
+
+Line 1010 ($A) Emulator
+-----------------------
+Triggered when an op code beginning with 1010 ($A) is encountered; the operating system uses this to throw errors. The general format is $Axxx where xxx is the error code. The error codes are the same as printed in the calculators manual. Some error codes are not documented.
+
+Line 1111 ($F) Emulator
+-----------------------
+Triggered when an op code beginning with 1111 ($F) is encountered.
+
+AMS < 2.04 Print Line 1111 Emulator and Freeze.
+
+AMS =>2.04 Call routine in jump table format is $F800 + JumpTableIndex.
+Example: ClrScr is $19E in the jump table. $F800 + $19E = $F99E. So dc.w $F99E (or .word 0xF99E 'as' style) would call ClrScr. When using this method, the call takes 2 bytes compared to 6 bytes and is much slower than the traditional methods.
+
+-------------
+AUTO_INTS 1-7
+-------------
+	This is intended to be an overview of what they are and what they do when triggered. There are ports you can write to and read from to control these interrupts. I have written the most about Auto-Int 7 because it has the most relevance to this document.
+
+There are 8 levels of interrupts on the TI-89:
+
+$000	Enable all interrupts						Top (all enabled)
+$100	Disable key scan 						\/
+$200	Disable Keyboard and higher					\/
+$300	Disable Slow Clock (not implemented in the ams) and higher	\/
+$400	Disable Link and higher						\/
+$500	Disable Timers and higher					\/
+$600	Disable ON key and higher					\/
+$700	Disable all interrupts						Bottom (all disabled)
+
+The interrupt level can be set with OSSetSR or Trap #1.
+
+Auto-Int 1
+----------
+	By default, it triggers about 395 times per second. Draws the status line.
+
+Auto-Int 2
+----------
+	Triggered when a key is pressed. A single keypress can generate multiple interrupts!
+
+Auto-Int 3
+----------
+	Disabled by the AMS. Triggers about 1.54 (395/256) times per second.
+
+Auto-Int 4
+----------
+	Triggered by the linking hardware for varoius reasons.
+
+Auto-Int 5
+----------
+	Controls the 6 timers used by the TIOS (1-6 inclusive). This interrupt is triggered at 20 times per second if you do not change the programmable rate generator. TIGCC .91 hooks on to this interrupt to provide vector timers.
+
+Auto-Int 6
+----------
+	Triggers when the ON KEY is pressed. A single keypress can generate multiple interrupts!
+
+Auto-Int 7
+----------
+	Protected Memory Violation. Triggers when a write is attempted at any address below $120
+or any address from $E00000 - $FFFFFF. This is to prevent damage to the Exception Vector Table from a stack overflow for example. The stack begins at $4BFF and grows backwards to $400, so most of the user vectors will be damaged before this interrupt triggers.
+	To avoid this interrupt, you can add $40000 to the address (under $120) that you want to write to. A second method is to clear bit #2 at $600001 to disable the interrupt; setting the bit enables the interrupt once again.
+
+Notes: The following instructions may be of interest in this interrupt...
+ ...
+ MOVE USP,A0		;the address to the user stack is in a0
+ CMPA.L #$400,A0		;compare with $400
+ BHI...	;if higher, then 'Protected Memory Error' is thrown...
+		;else 'Memory Error' is Thrown
+
+Trap #0 	($0)
+----------------
+Description: Execute various supervisor mode functions.
+	Input: d0 = function code
+
+Known Functions:
+	0 sets the power state, switches flash to low power mode
+	1 Idle
+	2 Clear Break
+	3 Check Break
+	4 Reset
+	5 ? 
+	6 Error Lockup
+
+Trap #1	($1)
+----------------
+Description: Interrupt Mask.
+	Input: D0.w = new interrupt mask
+     Output: D0.l = old SR
+	Notes: OSSetSR uses this trap.
+
+Trap #2	($2)
+----------------
+Description: Reset
+	Input:
+     Output: The calculator is reset. On ams 2.xx, the archive will be intact.
+ 	Notes: Used by Trap #8, so redirect this trap to avoid a reset if you use it.
+
+Trap #3	($3)
+----------------
+Description: OSenqueue
+	Input: parameters on stack C style: (short data, void* Queue)
+     Output: D0.w = 1 on success 0 on failure
+  Destroyed: assume that d1,d2,a0,a1 are destroyed
+
+Trap #4	($4)
+----------------
+Description: Turns the calculator off.
+	Input: Nothing? How does the ams know if the diamond or second key was pressed?
+     Output: Calculator is off... waits for the ON key to be pressed or a link interrupt to turn back on.
+
+Trap #5	($5)
+----------------
+Description: Prints Trap 5 with black bar and hangs.
+	Input: 
+     Output: 
+
+Trap #6	($6)
+----------------
+Description: Prints Trap 6 with black bar and hangs.
+	Input: 
+     Output: 
+
+Trap #7	($7)
+----------------
+Description: Prints Trap 7 with black bar and hangs.
+	Input: 
+     Output: 
+
+Trap #8	($8)
+----------------
+Description: Runs a block in supervisor mode.
+	Input: LE_WORD Size;BYTE Code[];
+     Output: The code is called (passed a5 with the end address), trap #2 is then called (put on the stack as the return address.
+
+Trap #9	($9)
+----------------
+Description: Returns pointers to various system functions and tables.
+input: d0.w = function id
+return: a0.l = pointer
+
+ids:
+0 OSContrastUp
+1 WinOpen
+2 OSLinkReset
+3 TIMERV *OSTimerVectors
+4 BYTE *OSContrast 		//end of LCD_MEMORY
+5 WinStr
+6 KEY_QUEUE *KeyBuffer
+7 OSqclear
+8 CHARTYPE* CharTbl;
+9 OSContrastUp
+10 OSContrastDn
+11 OSClearBreak;
+12 KEYCODE* KeyCodes;
+13 OSCheckBreak;
+14 LCD_MEM;
+15 OSdequeue
+16 RAMTest
+17 WinMoveTo
+
+
+Trap #10	($A)
+----------------
+Description: Self Test.
+	Input: 
+     Output: 
+
+Trap #11	($B)
+----------------
+Description: Handles all of the FLASH operations for the operating system.
+	Notes: This trap needs to execute from the ram if writing is to be peformed.
+
+The following info on this trap may not pertain to all ams versions.
+
+wormhole's Description of Trap #11
+d3 = function number
+0: write
+1: erase
+2: addcert
+3: getcert
+4: cgetvernum
+if (flen) function is copied and executed in RAM.
+d4 = size
+a2 = addr1
+a3 = addr2
+
+Zeljko's Description:
+	This trap encapsulates various functions which have the common
+fact that all of them works under the flash memory protection
+_disabled_, like writing blocks into the flash memory, erasing
+blocks, etc. This is the most protected part of AMS, but
+fortunately it has some holes which allow us to bypass some
+protections and to take full control over the system. The
+function number is in d3, various parameters are in other regs,
+but the function numbers are not consistent between various AMS 
+versions, so I will not list them. AMS 2.xx uses one function
+to manage RAM execution protection just _before_ launching the
+RAM program, so there is an illusion that Trap B launches the
+program. Anyway, this trap is good for various "hookings".
+
+Trap #12	($C)
+----------------
+Description: Enter Supervisor Mode.
+	Input: Nothing.
+     Output: d0.w contains previous SR upon return.
+	Notes: rte won't work to restore user mode because this trap pop's the sr off of the stack and then peforms rts which pops the return address off of the stack.
+
+Trap #13	($D)
+----------------
+Description: Prints Trap 13 with black bar and hangs.
+	Input: 
+     Output: Crash
+	Notes: used in ams versions>1.xx?
+
+Trap #14	($E)
+----------------
+Description: Prints Trap 14 with black bar and hangs
+	Input: 
+     Output: Crash
+	Notes: used in ams versions>1.xx?
+
+Trap #15	($F)
+----------------
+Description: Prints ER_throw with black bar and hangs.
+	Input: 
+     Output: 
+	Notes: used in ams versions>1.xx? ER_throwVar has a Trap #15 that is jumped over with a bne.s... so this is probably for a fatal error that the TI-OS can not deal with...
+
+ADDITIONAL NOTES/REMINDERS:
+	Trap #x executes vector #32 + x   0<=x<=16 (note, that this is the *vector number* not the address
+	Trap #x's pointer is located at $80+4*x
+
+Sources used to create this doccument:
+Motorola M68000 8-/16-/32-Bit Microprocessors User's Manual (Section 6 Exception Processing)
+TI92 and TI89 structures, variables, and information. By: Gareth James (Preliminary Version)
+Johan Eilert's TI-89 Hardware Programming doccument File Version: 200106040000
+Wormhole's FlashInfo.zip
+Zeljko Juric himself
+Me as Myself :)
+
+Related Links:
+http://alh.dhs.org/ti89/
+http://tigcc.ticalc.org
+http://www.ticalc.org
+http://gforce.calc.org/

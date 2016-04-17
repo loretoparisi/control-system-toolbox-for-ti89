@@ -1,0 +1,341 @@
+                     ______ __           _____   ________
+                     ___  //_/______________  | / /_  __ \
+                     __  ,<  _  _ \_  ___/_   |/ /_  / / /
+                     _  /| | /  __/  /   _  /|  / / /_/ /
+                     /_/ |_| \___//_/    /_/ |_/  \____/
+
+
+       Title: KerNO
+     Version: 3.1
+ Platform(s): TI-89, TI-89 Titanium, TI-92+, V200
+      Author: Greg Dietsche
+    Web Site: http://calc.gregd.org/
+      E-Mail: calc .at. gregd.org
+Release Date: 08/12/2004
+	Size: 1617 bytes
+
+_______________________________________________________________________________________________
+					DESCRIPTION
+THE NAME:
+	KerNO is an intentional misspelling of the work kernel. It also has _several_
+	implied meanings...
+
+WHAT'S IN A NAME?:
+	KerNO provides some features found in current kernels, but it will only allow
+		nostub programs to be executed. I wrote KerNO because I do not have any
+		kernel based programs on my calc, but wanted a small program that would
+		provide the features of a kernel that are relevant to NOSTUB programs.
+
+	In the process of writing KerNO, several NEW features which are not found
+		in current kernels were added. These new features include SPEEDING up the
+		keyboard, determining if the system heap is corrupt, and providing a fix
+		for games which slow down when the calculator is turned off and later turned
+		back on during game play.
+
+_______________________________________________________________________________________________
+					FEATURES
+
+1. Catches the following errors, which normally cause the calc to crash:
+	a. Address Error
+	b. Illegal Instruction
+	c. Divide By Zero
+	d. CHK Instruction
+	e. TRAPV Instruction
+	f. Privilege Violation* (see notes)
+	g. Line 1111 Emulator	(handles all possible AMS 2.04 - AMS 2.09  Line 1111 Instructions)
+
+2. ESC-ON can be used to break out of a program that is not responding.
+
+3. DIAMOND-ON can be pressed to turn the calc off even when the AMS is busy.
+
+4. Speeds up keyboard repeat rates, and decreases the delay before keys are repeated.
+	This feature is very similar to FastKeyboard (see credits).
+
+5. Fixes the Home Screen when recovering from a crash.
+
+6. Fixes (removes) the slowdown that happens in some games when the calc is turned
+   back on after being turned off during game play.
+
+7. Checks the heap and informs the user if it has been corrupted. If heap corruption
+	is detected, it is unlikely that KerNO will successfully recover the error.
+	Resetting the calculator is highly recommended!
+
+8. The Assembly Language size limit has been effectively raised to
+   65518 bytes(~64K)(65520 bytes if you want to be technical) for all
+   AMS versions. NOTE: the size limits set by TI are only present
+   on AMS 2.xx.
+
+9. Assembly language programs that return values can be used in expressions
+   such as 10/myasmfunc().
+
+10. Provides a custom Line 1111 emulator so that programs written to use
+   the line 1111 emulator won't crash if they are run on AMS versions
+   prior to 2.04. All line 1111 instructions found in AMS 2.05 are supported.
+
+_______________________________________________________________________________________________
+				HOW TO USE
+**Simply send KerNO to your calculator and run it once to install. To
+	uninstall, run KerNO a second time. KerNO is designed so that any version of
+	KerNO can uninstall another version (even newer ones).
+
+	*Users with a HW2 and HW3 calculators must install HW3 Patch before using KerNO
+
+**For Hardware Version Two / Three calculators, HW3 Patch *MUST* be installed first.
+
+**KerNO requires AMS 2.xx to work! If the calc has AMS 1.xx installed, upgrade or
+	use KerNO version 1.2 instead.
+
+ To use the ESC-ON or DIAMOND-ON key combinations, one must first press and *hold*
+ the modifier key (ESC or DIAMOND); then press and the ON key.
+_______________________________________________________________________________________________
+				THINGS TO KNOW
+
+OS	-	Operating System
+
+AMS	-	Advanced Mathematics Software: The name given to the operating system
+		on your calculator.
+
+NOSTUB	-	A program that does not need a kernel such as DoorsOS to run.
+
+*After an error has been recovered by KerNO, it is a good idea to backup
+anything important, and then reset your calc. Why? because types of errors that
+kerno recovers can cause the calculator to become unstable... as a result, KerNO may
+not be able to catch the next error reliably. This bit of wisdom applies to any program
+which provides crash protection.
+
+*DIAMOND-ON works whenever the auto-int 6 (on key) interrupt is enabled.
+
+*ESC-ON works whenever the auto-int 6 (on key) interrupt is enabled.
+	This means that ESC+ON will work when the AMS is being used normally.
+	ie the Home Screen. I **DO NOT** recommend using ESC-ON when using the AMS.
+
+*KerNO does not recover memory leaks.
+
+*I did not provide SHIFT - ON support. Why? Because one can use
+kdb programs to accomplish the same thing in a more flexible manner.
+To create a kbd program, just make or rename a program (basic, C, or Assembly language)
+and call it main\kbdprgmX where X is from 1 to 9. Then when you want to run it,
+press DIAMOND + X... all courtesy of the AMS!
+
+*KerNO will *NEVER* support programs that require a kernel.
+_______________________________________________________________________________________________
+				ANOMOLIES, BUGS and MISC OTHER
+
+ERRORS:
+	"Low Memory"
+		This means that KerNO could not successfully install itself on the
+		calculator. It is necessary to delete some program or data from the
+		ram to create enough room for KerNO to install.
+
+	"Remove Kernel"
+		This means that KerNO has found a Kernel already installed on
+		the calculator and as a result, was not able to install itself.
+		The other kernel must be removed before KerNO can be installed.
+		There are two ways to accomplish this:
+			1. use the uninstall program provided with the installed kernel
+			2. reset the calculator.
+
+	"HW3 Patch Required"
+		This means that you have a Hardware Version Two / Three Calculator. To
+		verify this, go to your home screen, and press F1 and then select
+		About. In the dialog, it will state "Hardware Version 2.00" or 
+		"Hardware Version 3.00" In order for KerNO to work, you need to 
+		install HW3 patch.
+
+	"OS Upgrade Required"
+		In order for KerNO to be effective, it needs AMS 2.xx or better. Go to
+		education.ti.com, download the latest operating system (AMS), and send it
+		to the calculator.
+
+	"This program needs a kernel"
+		The program you are trying to run needs a kernel such as PreOS in order
+		to run properly on your calculator. KerNO can not, and will never be able
+		to run these programs.
+
+	"Heap Corrupt"
+		KerNO has detected that the system heap (RAM) is corrupt on the calculator.
+		If this message appears, the calculator is in a **very** unstable state, and it
+		is likely that KerNO cannot recover from this error or subsiquent errors.
+		Resetting the calculator is *HIGHLY* recommended!!
+
+	"Address Error"
+	"Illegal Instruction"
+	"Divide By Zero"
+	"CHK Instruction"
+	"TRAPV Instruction"
+	"Privilege Violation"
+	"Line 1111 Emulator"
+		These are common assembly language errors from which KerNO will attempt
+		crash recovery.
+
+	"ESC+ON"
+		You pressed ESC and ON together; KerNO will attempt crash recovery.
+
+NOTES:
+	KerNO automatically detects VTI, and will disable handling of "Privilege Violation"
+	crashes when VTI is detected. The stack frame will be automatically corrected
+	for VTI address errors (VTI incorrectly stacks 6 bytes instead of 14). VTI is
+	automatically treated like a HW1 calculator.
+
+ISSUES:
+	*On HW2 calculators, Pressing and holding ESC+ON and DIAMOND+ON may cause
+	the Clock to drift by the amount of time the keys were physically held down
+	(round down for all fractional time periods .7=0 seconds, 1.5=1 second).
+
+BUGS:
+	*This BUG Seems To Affect Every Kernel in existance as well as KerNO:
+		Running an archived program which is larger than the amount of
+		free RAM will cause the calculator to crash.
+
+_______________________________________________________________________________________________
+				   LEGAL INFORMATION
+
+The author makes no representations or warranties about the suitability
+of the software, either express or implied. The author shall not be liable
+for any damages suffered as a result of using or distributing this software.
+
+This software is shareware. If you use it, please sign my guest book located at my
+website. Thanks :)
+_______________________________________________________________________________________________
+					CONTACT ME
+calc .at. gregd.org
+If you have any suggestions or bug reports please email me (I don't bite)
+if you don't understand this, (documentation) please ask me I will try to
+help you out as best as I can. You may also want to visit my web page at
+first though... I may have posted something
+there that could help you!
+_______________________________________________________________________________________________
+					CREDITS
+Anyone who has made a kernel...
+Assembly-89 Mailing List
+The TIGCC Team
+TIGCC Message Board
+TI
+Motorola for excellent 68k processor documentation
+
+(See PROGRAM HISTORY): Olivier Armand (ExtendeD), Kevin Kofler, Stoopid Guy, Lionel Debroux, Samuel Stearley
+
+Anyone else who knows their name should be here that I didn't think of... (please tell me)
+
+_______________________________________________________________________________________________
+					PROGRAM HISTORY
+Version 3.1
+	Release Date: 08/12/2004
+	Size: 1617 bytes
+	Changes:
+		*Removed h220xtsr support.
+		*Because of incorrect h220xtsr support, version 3.0 may crash on 
+		 HW2 calculators that have h220xtsr installed.
+
+Version 3.0
+	Release Date: 08/12/2004
+	Size: 1637 bytes (3019 with h220xtsr)
+	Changes:
+		*Support for TI-89 Titanium Added
+		*Upgraded to h220xtsr v1.12
+		*Fixed Handling of Line 1111 Emulator FFF2 instruction (was broken accidentally in 2.4)
+		*Decided to "Jump to v3.0" this should make it easy to remember that KerNO 3.0
+			works on AMS 3.0
+		*A big thanks to Samuel Stearley for TI-89 Titanium testing
+Version 2.4
+	Release Date: 03/22/2003
+	Size: 1661 bytes (2881 with h220xtsr)
+	Changes:
+		* Most error strings were reworded in some manner or another
+		* Added checking for invalid rom calls to $FFF2 line 1111 emulator code
+		* Implemented the NOSTUB Header Format taking adavantage of the FLAGS and _comment
+			features
+
+Version 2.3
+	Release Date: 01/18/2003
+	Size: 1665 bytes (2877 with h220xtsr)
+	Changes:
+		*Bug Fix in the crash recover routine (big thinks to Lionel Debroux for the report)
+		*Several size optimizations
+
+Version 2.2
+	Released 12/09/2002
+	Size: 1673 bytes (2885 with h220xtsr)
+	Changes:
+		*Lionel Debroux told me that uninstalling KerNO on AMS <2.04 caused a
+		line 1111 emulator crash. This bug affected KerNO v2.0 and up! I have
+		fixed the problem. Please use any version of KerNO starting at 2.2 to remove KerNO 2.0
+		or 2.1 !
+		Otherwise, you will need to reset the calculator to uninstall KerNO 2.0 and 2.1 .
+Version 2.1
+	Released: 12/09/2002
+	Size: 1649 bytes (2861 with h220xtsr)
+	Changes:
+		*Fixed DIAMOND + ON Key Combination - Now, it works on HW2 Calcs with the Clock
+			Turned On
+		*Added a call to OSLinkReset in the crash recovery routine
+		*Updated h220xtsr (now using version 1.11)
+
+Version 2.0
+	Released: 07/01/2002
+	Size: 1657 bytes (2861 with h220xtsr)
+	Changes:
+		***REQUIRES AMS 2.xx***
+		*Numerous optimizations...
+		*V200 is fully supported
+		*Supports h220xtsr by Kevin Kofler
+		*New Build Setting to build with or without h220xtsr
+		*Currently Includes h220xtsr version 1.10 when h220 is set to 1(one) during build
+		*Detects the rom and hardware version of the calc.
+		*Will not install on HW2 calcs if h220xtsr or HW2 patch has not been installed.
+		*Added Trap #4 handling to reset bus waitstates (fixes off/on slowdown present
+			in some games)
+		*Keyboard Repeat Rate increased and Delay between repeat decreased.
+			Similar effect as Fast Keyboard (see credits)
+		*Line F Emulator Bug Fix: now emulates bsr with a long word displacement ($FFF0)
+		*Line F Emulator Bug Fixes: added emulation for all instructions present on ams
+			2.04-2.08 ($FFF1, $FFF2)
+		*Line F emulator checks for invalid rom calls (rom call > # rom calls in jump table)
+		*Optimizations to the Line F emulator
+		*Bug fix: line 1010 emulator; a0 is now saved and restored
+		*Bug fix: Error handling cleans up the supervisor stack correctly
+		*Support for the V200 added
+		*Automatic detection of VTI and workarounds for VTI bugs added
+		*Will try to fix the Home Screen (same routines as HSR) after a crash
+		*Uses HeapWalk to verify that the system heap is not corrupt
+			("System Heap Is Corrupt!" Message added)
+
+		*errorsim was fixed to display correctly on the TI-92p
+		*errorsim now detects KerNO, Doors OS, Universal OS, PreOS,
+			Hardware Version, HW2 Patch, and h220xtsr
+		*new testing utility: FLINE demonstrates all possible F line instructions
+			on ams 2.05
+
+	Thanks/Credits:
+		Stoopid Guy for informing me of problems with the Line F emulator and FLASH Apps.
+		Olivier Armand (ExtendeD) for the Line F emulator $FFF0 patch posted
+			on the PreOS boards, and figuring out why the calculator will
+			sometimes slow down after a call to trap #4 or off();
+		Scott Noveck for suggesting that KerNO fix the off/on slowdown present
+			in some games, and for V200 testing
+		Jeff Flanigan for writing Fast Keyboard which gave me the keyboard
+			speedup idea
+
+Version 1.2
+	Released 01/11/2002
+	Size: 1325 bytes
+	Changes:
+		Works on AMS 1.xx calculators (the dialog strings were too long before)
+		Detects and requires HW2 Patch
+		misc other... things that slip my mind... see the source code =P
+	Thanks:
+		Olivier Armand (ExtendeD) for telling me about the VTI $20 (Priv Violation) bug
+
+Version 1.1
+	Released 11/07/2001
+	Size: 1217
+	Changes:
+	  ****The STO->ON key combo has been replaced with ESC+ON****
+	  It checks to be sure the on key is what triggered auto-int 6...
+	  Source Code Released. Please note the copyright.
+
+Version 1.0
+	Initial Release:
+	Released 10/16/2001
+	-size is 1197 bytes
+_______________________________________________________________________________________________
