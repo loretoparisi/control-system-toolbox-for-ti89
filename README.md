@@ -55,7 +55,17 @@ Working sessions management, safing you to loose data quitting CST. CST saves th
 
 Robust Error Management System to prevent unsafe aborts and a useful On-line Help Tool.
 
-## FAQ
+## Documentation :new:
+
+- The CST Start Guide, *First Edition October 2005*
+[Download :point_left:](https://github.com/loretoparisi/control-system-toolbox-for-ti89/blob/master/docs/CSTStartGuide.pdf)
+- The CST Reference Guide, *First Edition October 2005*
+[Download :point_left:](https://github.com/loretoparisi/control-system-toolbox-for-ti89/blob/master/docs/CSTReferenceGuide.pdf)
+- The CST User Guide, *Fifth Edition October 2005*
+[Download :point_left:](https://github.com/loretoparisi/control-system-toolbox-for-ti89/blob/master/docs/CSTUserGuide.pdf)
+
+
+## FAQ :new:
 - Which Texas Instruments calculators are supported?
 The currently supported TI calculators are **TI-89**, **TI-89 Titanium** and **TI-92/Plus/Voyage 200**.
 - How to fix the **DOMAIN-ERROR** on TI-89 Titanium?
@@ -107,7 +117,7 @@ Plots the Nyquist Diagram and the Root Locus.
 - Home: www.infinito.it/utenti/bremen79/
 - Licence: Gnu GPL
 
-### Acknowledgments
+## Acknowledgments
 Many thanks to all those programmers and users which directly or indirectly gave a hand in making CST for TI-89. 
 
 - 92BROTHERS
@@ -140,4 +150,10 @@ Jiri Bazant
 - Home: http://www.razdva.cz/georger/
 
 
-
+## ticalc.org
+CST for TI-89 is featured on ticalc.org [here](https://www.ticalc.org/archives/files/fileinfo/379/37951.html) where it is currently ranked
+```
+Ranked as 159 on our all-time top downloads list with 47121 downloads.
+Ranked as 441 on our top downloads list for the past seven days with 13 downloads.
+Ranked as 167 on our top rated list with a weighted average of 8.44.
+```
