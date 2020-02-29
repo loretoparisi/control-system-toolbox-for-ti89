@@ -1,8 +1,9 @@
 ![cstlogo2](https://cloud.githubusercontent.com/assets/163333/14590189/117e4706-04f5-11e6-8a2a-fd708c1e0849.jpg)
 
-###Control System Toolbox for TI-89
+# Control System Toolbox for TI-89
 *GnuGPL 2002-2005 Loreto Parisi*
 
+# About CST for TI-89
 Control System Toolbox (CST) for TI-89 is a suite of functions and programs for Systems Control and Tuning for the TI-89 personal calculator, developed by Loreto Parisi starting from June 2002.
 
 CST supports Linear Time-Invariant (LTI) Systems in Continuous(t)and Discrete (k) Time Domains simultaneuosly, Delayed Systems (affected by a Time Delay) and Non-Linear Systems (to be linearized).
@@ -25,7 +26,7 @@ What Else?
 
 LP, October 2005. ( @loretoparisi )
 
-###Introducing CST r1.3
+# Introducing CST r1.3
 Control System Toolbox release 1.3 come with many powerful features. For newbee to CST please see About first. Let see Release 1.3 new features in details.
 
 Nyquist Diagrams;
@@ -54,10 +55,21 @@ Working sessions management, safing you to loose data quitting CST. CST saves th
 
 Robust Error Management System to prevent unsafe aborts and a useful On-line Help Tool.
 
-###Tools
+## FAQ
+- Which Texas Instruments calculators are supported?
+The currently supported TI calculators are **TI-89**, **TI-89 Titanium** and **TI-92/Plus/Voyage 200**.
+- How to fix the **DOMAIN-ERROR** on TI-89 Titanium?
+This is a known issue that happens on the TI-89 Titanium series calculators. To solve it please do
+
+```
+Mode -> page 2 -> Exact/Approx change from "Exact" -> "Auto"
+```
+
+## Tools
 Here you are a complete list of Control System Toolbox r1.3 embedded and external tools.
 
-**LZT r7**
+
+### LZT r7
 From release 1.3, CST needs the tool LZT to perform symbolic calculations (i.e. 
 Laplace and Zeta transforms). To install LZT please follow instructions we provide in section Install LZT of CST Start Guide. We also raccomend to read the LZT Readme file.
 
@@ -66,7 +78,7 @@ Laplace and Zeta transforms). To install LZT please follow instructions we provi
 - Home: http://www.razdva.cz/georger/
 - Licence: Freeware 
 
-**KerNO r3.1**
+### KerNO r3.1
 This powerful tool needs any kernel like DoorsOS, UniOS or KerNO. We provide 
 KenNO r3.1 from CST r1.3 as its convenient installation. To install KerNO please follow instructions we provide in section Install KerNO of CST Start Guide. We also 
 raccomend to read the KerNo readme file. 
@@ -76,7 +88,7 @@ raccomend to read the KerNo readme file.
 - Home: http://calc.gregd.org/
 - Licence: Freeware
 
-**BodeX v2.2.4**
+### BodeX v2.2.4
 The best program for TI calculators that trace frequency plot of a transfer function W(s) of a SISO or MIMO 
 system (Bode plots) with or withoout time delay. BodeX use a powered routine to plot the phase plot of a 
 transfer function (don't use simply the angle(•) function). The BodeX routines ensure the correct phase plot 
@@ -87,7 +99,7 @@ any W(s) it's plotted.
 - Home: http://www.92brothers.net/
 - Licence: Gnu GPL
 
-**NYQUIST, RLOCUS (CT v1.16)**
+### NYQUIST, RLOCUS (CT v1.16)
 Plots the Nyquist Diagram and the Root Locus.
 
 - Author: Francesco Orabona
@@ -95,10 +107,9 @@ Plots the Nyquist Diagram and the Root Locus.
 - Home: www.infinito.it/utenti/bremen79/
 - Licence: Gnu GPL
 
-###Thanks to
+### Acknowledgments
 Many thanks to all those programmers and users which directly or indirectly gave a hand in making CST for TI-89. 
 
-**The Programmers**
 - 92BROTHERS
 - Contribute: bodex()
 - E-mail: 92brothers@infinito.it
